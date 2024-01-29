@@ -1,0 +1,31 @@
+#!/bin/bash
+
+SRC_FILES="src/list_linked.c src/stack_linked.c src/queue_linked.c main.c"
+
+CC=gcc
+CFLAGS="-W -Wall -Werror -std=c99 -pedantic"
+LDFLAGS=""
+
+STATIC_LIB=libmylpf.a
+
+SHARED_LIB=libmylpf.so
+
+command -v  $CC >/dev/null 2>&1 || { echo >&2 "Le compilateur $CC est nécessaire mais introuvable. Veuillez l'installer et réessayer. :)"; exit 1; }
+
+command -v  ar >/dev/null 2>&1 || { echo >&2 "La commande 'ar' (utilisée pour créer des bibliothèques statiques) est nécessaire mais introuvable. Veuillez l'installer et réessayer. :)"; exit 1; }
+
+command -v  make >/dev/null 2>&1 || { echo >&2 "La commande 'make' est nécessaire mais introuvable. Veuillez l'installer et réessayer. :)"; exit 1; }
+
+command -v  ld >/dev/null 2>&1 || { echo >&2 "La commande 'ld' est nécessaire mais introuvable. Veuillez l'installer et réessayer. :)"; exit 1; }
+
+$CC $CFLAGS $SRC_FILES  $LDFLAGS -o  main >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo >&2 "It's a fail ahahaha. ;) Je vous prie de reverifier ainsi vos dépendances et options de compilation. :)"
+  exit 1
+fi
+
+rm -f main
+
+echo "Configuration réussie. Vous pouvez maintenant utiliser 'make' pour compiler le projet."
+
+exit 0
